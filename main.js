@@ -1,21 +1,24 @@
-
-
-//https://shibe.online/
-
-
-const build = (data) => {
-    let domString = `
-    <h3>${data[0].additional_location_information}</h3>
-    <h3>${data[0].cemetery_name}</h3>
-    <h3> Address : ${data[0].number} ${data[0].street}</h3>
-    <h3>${data[0].mapped_location_address}</h3>
-    `;
-    
-    $('#printHere').html(domString); // prints to DOM
-
+const build1 = (data2) => {
+    let domString = 
+     `
+    <h3>${data2[0].additional_location_information}</h3>
+    <h3>${data2[0].cemetery_name}</h3>
+    <h3> Address : ${data2[0].number} ${data2[0].street}</h3>
+    <h3>${data2[0].mapped_location_address}</h3>
+    `
+    ;
+    $('#printFirst').append(domString);
 }
-//data[0].additional_location_information
 
+//Use this Object.values(data[0])
+const build = (data) => {
+    let domString = '';
+    for(let i=0;i<data.length;i++){
+        // domString += `<div>${data[i].death_date}</div>`;
+        domString += `<div>${Object.values(data[i])}</div>`;
+    } 
+    $('#printHere').append(domString); 
+}
 
 const apiGet = () => {
     return new Promise((resolve, reject)=> {
@@ -26,10 +29,10 @@ const apiGet = () => {
         console.error(error);
         reject(error)
       }); 
-      })
-  };
+    })
+};
 
-  const callApi = () =>{   
+const callApi2 = () =>{   
     apiGet().then(data => { 
         console.log(data)
         build(data);
@@ -39,29 +42,15 @@ const apiGet = () => {
     });
 };
 
-callApi();
-/////////////////////////////////////////////////////////
+const callApi = () =>{   
+    apiGet().then(data => { 
+        console.log(data)
+        build1(data);
+        callApi2();
+    })
+    .catch((error)=>{
+        console.log(error);
+    });
+};
 
-// const initialPinView = (boardId) => {
-//     loadPinsForBoard(boardId)
-//     .then(data => {
-//         writePins(data);
-//         bindEvents();
-//     })
-//     .catch(error => {
-//         console.error('things messed up in pins', error);
-//     });
-// }
-// const loadPinsForBoard = (boardId) => {
-//     return new Promise((resolve, reject) => {
-//         $.get('../db/pins.json')
-//         .done((data) => {
-//             const pinsForBoards = data.pins.filter(pin => pin.board_id == boardId)
-//             resolve(pinsForBoards)
-//         })
-//         .fail((error) => {
-//             console.error(error);
-//             reject(error);
-//         })
-//     })
-// } 
+callApi();
