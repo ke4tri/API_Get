@@ -1,8 +1,8 @@
 const build1 = (data2) => {
     let domString = 
      `
-    <h3>${data2[0].additional_location_information}</h3>
-    <h3>${data2[0].cemetery_name}</h3>
+    <h3>Location Information : ${data2[0].additional_location_information}</h3>
+    <h3>Cemetery Name : ${data2[0].cemetery_name}</h3>
     <h3> Address : ${data2[0].number} ${data2[0].street}</h3>
     <h3>${data2[0].mapped_location_address}</h3>
     `
